@@ -1,0 +1,9 @@
+rootProject.name = 'order-processor'
+include 'eureka-server'
+include 'config-server'
+include 'order-service'
+include 'payment-service'
+include 'shipment-service'
+include 'notification-server'
+include 'common-libraries'
+
