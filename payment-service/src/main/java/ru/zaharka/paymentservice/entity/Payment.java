@@ -1,62 +1,62 @@
 package ru.zaharka.paymentservice.entity;
 
+import jakarta.persistence.*;
+import lombok.*;
 import ru.zaharka.commonlibraries.domain.payment.PaymentMethod;
 import ru.zaharka.commonlibraries.domain.payment.PaymentStatus;
 
 import java.math.BigDecimal;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Entity
+@Table(name = "payments")
+@ToString
 public class Payment {
-    private long paymentId;
-    private long orderId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "payment_id")
+    private Long paymentId;
+
+    @Column(name = "order_id")
+    private Long orderId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method")
     private PaymentMethod paymentMethod;
+
+    @Column(name = "price")
     private BigDecimal price;
 
-    public Payment(long paymentId, long orderId, PaymentStatus paymentStatus, PaymentMethod paymentMethod, BigDecimal price) {
-        this.paymentId = paymentId;
-        this.orderId = orderId;
-        this.paymentStatus = paymentStatus;
+    public Payment(PaymentMethod paymentMethod, BigDecimal price, Long orderId) {
         this.paymentMethod = paymentMethod;
         this.price = price;
+        this.orderId = orderId;
     }
 
-    public long getPaymentId() {
+    public Long getPaymentId() {
         return paymentId;
     }
 
-    public void setPaymentId(long paymentId) {
-        this.paymentId = paymentId;
-    }
-
-    public long getOrderId() {
+    public Long getOrderId() {
         return orderId;
-    }
-
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
     }
 
     public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(PaymentStatus paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
     public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
     public BigDecimal getPrice() {
         return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 }

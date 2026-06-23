@@ -1,5 +1,6 @@
 package ru.zaharka.paymentservice.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.zaharka.commonlibraries.domain.payment.PaymentMethod;
@@ -26,22 +27,24 @@ public class PaymentService {
         this.paymentMapper = paymentMapper;
     }
 
+    @Transactional
     public CreatePaymentResponseDto createPayment(CreatePaymentRequestDto createPaymentRequestDto) {
-
         Payment payment = paymentMapper.createPaymentRequestDtoToPayment(createPaymentRequestDto);
-        payment.setPaymentId(1);
         if(payment.getPaymentMethod().equals(PaymentMethod.CARD)){
             payment.setPaymentStatus(PaymentStatus.SUCCEEDED);
         }
         else{
             payment.setPaymentStatus(PaymentStatus.FAILED);
         }
-        paymentRepository.addPayment(payment);
-        return paymentMapper.paymentToCreatePaymentResponseDto(payment);
+        paymentRepository.save(payment);
+        System.out.println(payment);
+        CreatePaymentResponseDto createPaymentResponseDto = paymentMapper.paymentToCreatePaymentResponseDto(payment);
+        System.out.println(createPaymentResponseDto);
+        return createPaymentResponseDto;
     }
 
     public List<PaymentDto> getAllPayments() {
-        return paymentRepository.getPayments().stream().map(paymentMapper::paymentToPaymentDto).toList();
+        return paymentRepository.findAll().stream().map(paymentMapper::paymentToPaymentDto).toList();
     }
 
 

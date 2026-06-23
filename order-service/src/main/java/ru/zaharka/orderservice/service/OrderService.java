@@ -7,7 +7,6 @@ import ru.zaharka.commonlibraries.domain.order.OrderStatus;
 import ru.zaharka.commonlibraries.domain.payment.PaymentMethod;
 import ru.zaharka.commonlibraries.domain.payment.PaymentStatus;
 import ru.zaharka.commonlibraries.dto.order.OrderDto;
-import ru.zaharka.commonlibraries.dto.order.OrderItemDto;
 import ru.zaharka.commonlibraries.dto.order.OrderResponseDto;
 import ru.zaharka.commonlibraries.http.CreatePaymentRequestDto;
 import ru.zaharka.commonlibraries.http.CreatePaymentResponseDto;
@@ -16,8 +15,6 @@ import ru.zaharka.orderservice.entity.Order;
 import ru.zaharka.orderservice.entity.OrderItem;
 import ru.zaharka.orderservice.repository.OrderRepository;
 import ru.zaharka.orderservice.util.OrderMapper;
-
-import java.beans.Transient;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -62,7 +59,7 @@ public class OrderService {
     @Transactional
     public OrderResponseDto payOrder (long orderId, PaymentMethod paymentMethod) {
         Optional<Order> orderOptional = orderRepository.findByOrderId(orderId);
-        if (!orderOptional.isPresent()) {
+        if (orderOptional.isEmpty()) {
             throw new RuntimeException("Order not found");
         }
         Order order = orderOptional.get();

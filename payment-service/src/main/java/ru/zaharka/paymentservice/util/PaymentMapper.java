@@ -12,9 +12,9 @@ import ru.zaharka.paymentservice.entity.Payment;
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PaymentMapper {
 
-    Payment createPaymentRequestDtoToPayment(CreatePaymentRequestDto createPaymentRequestDto);
+    Payment createPaymentRequestDtoToPayment (CreatePaymentRequestDto createPaymentRequestDto);
 
-    CreatePaymentResponseDto paymentToCreatePaymentResponseDto(Payment payment);
+    CreatePaymentResponseDto paymentToCreatePaymentResponseDto (Payment payment);
 
-    PaymentDto paymentToPaymentDto(Payment payment);
+    PaymentDto paymentToPaymentDto (Payment payment);
 }
