@@ -1,4 +1,5 @@
 rootProject.name = 'order-processor'
+include 'api-gateway'
 include 'eureka-server'
 include 'config-server'
 include 'order-service'

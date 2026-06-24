@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: order-service
+              uri: lb://order-service
+              predicates:
+                - Path=/orders/**
+                - Method=GET,POST,PUT,DELETE
